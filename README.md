@@ -15,7 +15,7 @@ clone the repository or download the script:<br>
 **cd to the repository folder**<br>
 **install required dependencies:**<br>
 pip install faker<br>
-**run the script**
+**run the script**<br>
 python/python3 sqlitedb.py
 
 
