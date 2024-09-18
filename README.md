@@ -29,5 +29,3 @@ Run queries for following data:
 -Detect if there are any authors without books
 -As least 5 authors who have written more than three books
 
-## Known Issues
-- Query for authors without books might not return the expected results
