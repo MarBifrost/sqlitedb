@@ -10,11 +10,12 @@ fake = Faker()
 # create of authors' and books' tables if they don't exist
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS authors (
-        author_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
         author_name TEXT NOT NULL,
         surname TEXT NOT NULL,
         birthdate DATE NOT NULL,
-        birthplace TEXT NOT NULL
+        birthplace TEXT NOT NULL,
+        author_ID INTEGER NOT NULL
     )
 
 """)
@@ -22,26 +23,26 @@ cursor.execute("""
 
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS books (
-        book_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         category TEXT NOT NULL,
         pages INTEGER NOT NULL,
         publishing_date DATE NOT NULL,
-        author_ID INTEGER NOT NULL,
+        author_ID INTEGER,
         FOREIGN KEY(author_ID) REFERENCES authors(author_ID)
     )
 
-""")
-# instert 500 fake authors into the table 'authors'
+ """)
 for i in range(500):
     author_name = fake.first_name()
     author_surname = fake.last_name()
     author_birthdate = fake.date_of_birth(minimum_age=25, maximum_age=100)
     author_birthplace = fake.city()
+    author_ID = fake.random_int(min=0, max=500)
 
     cursor.execute("""
-        INSERT INTO authors (author_name, surname, birthdate, birthplace) VALUES (?, ?, ?, ?)
-    """, (author_name, author_surname, author_birthdate, author_birthplace))
+        INSERT INTO authors (author_name, surname, birthdate, birthplace, author_ID) VALUES (?, ?, ?, ?, ?)
+    """, (author_name, author_surname, author_birthdate, author_birthplace, author_ID))
 
 # Fetch author IDs for assigning to books
 cursor.execute("SELECT author_ID FROM authors")
@@ -63,7 +64,6 @@ for i in range(1000):
         values (?, ?, ?, ?, ?)
     """, (book_title, book_category, book_pages, book_publishing_date, author_ID))
 
-# query to find the book with the most pages
 cursor.execute("""
     select * from books order by pages desc limit 1;
 """)
@@ -90,32 +90,30 @@ print(f"The youngest authors: \n{youth[0]} {youth[1]} born in {youth[2]}\n")
 
 # query to find the authors without any books
 cursor.execute("""
-    select a.author_ID, a.author_name, a.surname from authors a right join books b on a.author_ID = b.author_ID where b.author_ID is null;
+    select a.author_name, a.surname from authors a left join books b on a.author_ID = b.author_ID where b.author_ID is null;
 """)
 
 authors_without_books = cursor.fetchall()
-auth = ''.join(authors_without_books)
-if auth == "":
-    print("There are no authors without any books! \n")
-else:
-    print(f"The authors without any books: {auth}")
+no_books = ''.join(
+    [f"{no_book[0]} {no_book[1]}\n" for no_book in authors_without_books])
+print(f"The authors without any books: \n{no_books}")
+
 
 # query to find authors with more than 3 books
 cursor.execute("""
-    SELECT a.author_ID, a.author_name, a.surname, COUNT(b.book_ID) as book_count
+    SELECT a.author_ID, a.author_name, a.surname, COUNT(b.ID) as book_count
     FROM authors a
     INNER JOIN books b ON a.author_ID = b.author_ID
     GROUP BY a.author_ID
-    HAVING COUNT(b.book_ID) > 3
+    HAVING COUNT(b.ID) > 3
     LIMIT 5;
 """)
 
 authors_with_3_books = cursor.fetchall()
-authors_with_books = ', '.join(
-    [f"{author[1]} {author[2]}" for author in authors_with_3_books])
+authors_with_books = ''.join(
+    [f"{author[1]} {author[2]} \n" for author in authors_with_3_books])
 print(f"Authors with more than 3 books:\n{authors_with_books}")
 
-# commit changes and close the connection
 conn.commit()
 cursor.close()
 conn.close()
