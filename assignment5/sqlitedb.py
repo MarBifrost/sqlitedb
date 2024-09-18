@@ -64,6 +64,7 @@ for i in range(1000):
         values (?, ?, ?, ?, ?)
     """, (book_title, book_category, book_pages, book_publishing_date, author_ID))
 
+#Query to find the book with the most pages
 cursor.execute("""
     select * from books order by pages desc limit 1;
 """)
@@ -72,8 +73,7 @@ pages = cursor.fetchone()
 most_pages = f"Book ID: {pages[0]}\nTitle: {pages[1]}\nCategory: {pages[2]}\nPages: {pages[3]}\nPublish Date: {pages[4]}\nAuthor ID: {pages[5]}\n"
 print(f"The book with the most pages: \n{most_pages}")
 
-# query to calculate the average number of pages, also it's rounded to the
-# nearest integer
+# query to calculate the average number of pages, also it's rounded to the nearest integer
 cursor.execute("""
     select round(avg(pages)) as avg_pages from books;
 """)
@@ -114,6 +114,7 @@ authors_with_books = ''.join(
     [f"{author[1]} {author[2]} \n" for author in authors_with_3_books])
 print(f"Authors with more than 3 books:\n{authors_with_books}")
 
+#Commit changes and close the connection
 conn.commit()
 cursor.close()
 conn.close()
