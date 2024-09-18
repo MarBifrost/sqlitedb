@@ -10,10 +10,10 @@ This project creates and manages sqlite database
 
 
 ## installation
-clone the repository or download the script:  
-**git clone https://github.com/MarBifrost/my_sqlitedb**
-**cd to the repository folder**
-**install required dependencies:**
+clone the repository or download the script:<br>
+**git clone https://github.com/MarBifrost/my_sqlitedb**<br>
+**cd to the repository folder**<br>
+**install required dependencies:**<br>
 pip install faker
 **run the script**
 python/python3 sqlitedb.py
