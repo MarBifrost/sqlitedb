@@ -1,15 +1,15 @@
-#Books and Authors Database with python/sqlite
+# Books and Authors Database with python/sqlite
 
-##Description
+## Description
 This project creates and manages sqlite database
 
-##Requirements
+## Requirements
 -python 3.x
 -sqlite3
 -Faker and datatime libraries
 
 
-##installation
+## installation
 clone the repository or download the script:
 **git clone https://github.com/MarBifrost/my_sqlitedb**
 **cd to the repository folder**
@@ -19,7 +19,7 @@ pip install faker
 python/python3 sqlitedb.py
 
 
-##Usage
+## Usage
 Create sqlite Database and tables which are stored as 'Books_and_authors.sqlite3' in the script.
 Generate and inserts fake data with faker
 Run queries for following data:
@@ -29,5 +29,5 @@ Run queries for following data:
 -Detect if there are any authors without books
 -As least 5 authors who have written more than three books
 
-##Known Issues
+## Known Issues
 -Query for authors without books might not return the expected results
