@@ -14,7 +14,7 @@ clone the repository or download the script:<br>
 **git clone https://github.com/MarBifrost/my_sqlitedb**<br>
 **cd to the repository folder**<br>
 **install required dependencies:**<br>
-pip install faker
+pip install faker<br>
 **run the script**
 python/python3 sqlitedb.py
 
