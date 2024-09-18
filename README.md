@@ -4,9 +4,9 @@
 This project creates and manages sqlite database
 
 ## Requirements
--python 3.x
--sqlite3
--Faker and datatime libraries
+- python 3.x<br>
+- sqlite3
+- Faker and datatime libraries
 
 
 ## installation
@@ -30,4 +30,4 @@ Run queries for following data:
 -As least 5 authors who have written more than three books
 
 ## Known Issues
--Query for authors without books might not return the expected results
+- Query for authors without books might not return the expected results
